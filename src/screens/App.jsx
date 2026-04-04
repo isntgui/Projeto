@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import '../css/App.css';
 import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 
 
 function App() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -19,15 +22,19 @@ function App() {
     });
 
     if (error) {
-      alert('Erro: ' + error.message);
+      if (error.message.includes('Invalid login credentials')) {
+        alert('Email ou senha estão incorretos');
+      } else {
+        alert('Erro: ' + error.message);
+      }
     } else {
       alert('Logado!');
       console.log(data);
     }
   }
 
-  function handleForgetPassword() {
-    console.log("Lidando com esqueceu a senha");
+  async function handleForgetPassword() {
+    navigate('/forget-password');
   }
 
   async function handleRegisterUser() {
@@ -50,15 +57,17 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <h1>Login</h1>
-      <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email"></input>
-      <input type="password" onChange={(e) => setSenha(e.target.value)} placeholder="Senha"></input>
-      <button onClick={handleLogin}>Entrar</button>
-      <button onClick={handleForgetPassword}>Esqueceu a senha?</button>
-      <button onClick={handleRegisterUser}>Cadastrar</button>
-    </div>
+    <>
+      <div className="container">
+        <h1>Login</h1>
+        <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email"></input>
+        <input type="password" onChange={(e) => setSenha(e.target.value)} placeholder="Senha"></input>
+        <button onClick={handleLogin}>Entrar</button>
+        <button onClick={handleForgetPassword}>Esqueceu a senha?</button>
+        <button onClick={handleRegisterUser}>Cadastrar</button>
+      </div>
+    </>
   )
 }
 
-export default App
+export default App;
