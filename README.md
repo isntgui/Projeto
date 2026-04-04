@@ -1,2 +1,2 @@
 Projeto de uma rede social.
-React + Supabase.
+React + Supabase + BootStrap.
