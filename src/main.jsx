@@ -2,7 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import './css/index.css';
 import App from './screens/App.jsx';
 import ForgetPassword from './screens/ForgetPassword.jsx';
 import ResetPassword from './screens/resetPassword.jsx';

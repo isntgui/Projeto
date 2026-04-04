@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import '../css/App.css';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-
+import EyeIcon from '../assets/eye.svg';
+import EyeOffIcon from '../assets/eyeoff.svg';
 
 function App() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleLogin() {
     if (!email || !senha) {
@@ -51,7 +53,7 @@ function App() {
     if (error) {
       alert('Erro: ' + error.message);
     } else {
-      alert('Usuário cadastro! Verifique seu email email!');
+      alert('Usuário cadastro! Verifique seu email!');
       console.log(data);
     }
   }
@@ -60,11 +62,44 @@ function App() {
     <>
       <div className="container">
         <h1>Login</h1>
-        <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email"></input>
-        <input type="password" onChange={(e) => setSenha(e.target.value)} placeholder="Senha"></input>
-        <button onClick={handleLogin}>Entrar</button>
-        <button onClick={handleForgetPassword}>Esqueceu a senha?</button>
-        <button onClick={handleRegisterUser}>Cadastrar</button>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="form-control mb-2"
+        />
+        <div className="input-password-wrapper mb-2">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            placeholder="Senha"
+            className="form-control"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="eye-button btn p-0"
+          >
+            <img
+              src={showPassword ? EyeOffIcon : EyeIcon}
+              alt="Mostrar/Esconder senha"
+              width={20}
+              height={20}
+            />
+          </button>
+        </div>
+
+        <button onClick={handleLogin} className="btn btn-primary w-100 mb-2">
+          Entrar
+        </button>
+        <button onClick={handleRegisterUser} className="btn btn-success w-100 mb-2">
+          Cadastrar
+        </button>
+        <button onClick={handleForgetPassword} className="btn btn-link w-100">
+          Esqueceu a senha?
+        </button>
       </div>
     </>
   )
