@@ -32,6 +32,7 @@ function App() {
     } else {
       alert('Logado!');
       console.log(data);
+      navigate('/home');
     }
   }
 
@@ -40,22 +41,7 @@ function App() {
   }
 
   async function handleRegisterUser() {
-    if (!email || !senha) {
-      alert('Preencha email e senha!');
-      return;
-    }
-    
-    const {data, error} = await supabase.auth.signUp({
-      email,
-      password: senha
-    });
-
-    if (error) {
-      alert('Erro: ' + error.message);
-    } else {
-      alert('Usuário cadastro! Verifique seu email!');
-      console.log(data);
-    }
+    navigate('/cadaster-user');
   }
 
   return (

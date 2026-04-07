@@ -93,7 +93,6 @@ function ResetPassword() {
         </button>
       </div>
 
-      {/* Input confirmar senha */}
       <div className="input-password-wrapper mb-2">
         <input
           type={showConfirmPassword ? 'text' : 'password'}
