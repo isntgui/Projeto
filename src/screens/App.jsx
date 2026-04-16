@@ -32,7 +32,7 @@ function App() {
     } else {
       alert('Logado!');
       console.log(data);
-      navigate('/home');
+      navigate('/home-page');
     }
   }
 
@@ -41,7 +41,14 @@ function App() {
   }
 
   async function handleRegisterUser() {
-    navigate('/cadaster-user');
+    navigate('/verify-email');
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleLogin();
+    }
   }
 
   return (
@@ -62,6 +69,7 @@ function App() {
             onChange={(e) => setSenha(e.target.value)}
             placeholder="Senha"
             className="form-control"
+            onKeyDown={handleKeyDown}
           />
           <button
             type="button"
