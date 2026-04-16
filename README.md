@@ -7,6 +7,8 @@
     </p>
 </div>
 
+<hr>
+
 <h3>Tecnologias:</h3>
 <ul>
     <li style="font-family: 'Courier New', monospace;">React</li>
