@@ -8,38 +8,92 @@ function CadasterUser() {
     const [user, setUser] = useState(null);
     const [password, setPassword] = useState('');
     const [bio, setBio] = useState('');
-    useEffect(() => {
-        async function loadUser() {
-            const { data: { user } } = await supabase.auth.getUser();
+    const [file, setFile] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-            if (!user) {
-                alert("Você precisa confirmar o email primeiro!");
+    useEffect(() => {
+        async function loadSession() {
+            const { data } = await supabase.auth.getSession();
+
+            if (!data.session) {
+                alert("Você precisa estar logado!");
                 navigate("/");
                 return;
             }
 
-            setUser(user);
+            setUser(data.session.user);
         }
 
-        loadUser();
+        loadSession();
     }, [navigate]);
 
+    // Upload do avatar
+    async function uploadAvatar() {
+        if (!file) return null;
+        if (!user) throw new Error("Usuário não carregado");
+
+        const fileExt = file.type.split('/')[1];
+        const filePath = `${user.id}/avatar.${fileExt}`;
+
+        const { error } = await supabase.storage
+            .from('users')
+            .upload(filePath, file, { upsert: true });
+
+        if (error) throw error;
+
+        const { data: urlData } = supabase.storage
+            .from('users')
+            .getPublicUrl(filePath);
+            
+        return urlData.publicUrl;
+    }
+
     async function handleCadasterUser() {
+        if (!user) {
+            alert("Usuário ainda não carregou");
+            return;
+        }
+
         if (!password) {
             alert("Digite uma senha!");
             return;
         }
 
-        const { error } = await supabase.auth.updateUser({
-            password: password
-        });
+        if (password.length < 6) {
+            alert("Senha precisa ter pelo menos 6 caracteres");
+            return;
+        }
 
-        if (error) {
-            console.log(error);
-            alert("Erro ao definir senha!");
-        } else {
+        try {
+            setLoading(true);
+
+            const { error: passwordError } = await supabase.auth.updateUser({
+                password
+            });
+
+            if (passwordError) throw passwordError;
+
+            const avatarUrl = await uploadAvatar();
+
+            const { error: dbError } = await supabase
+                .from('users')
+                .upsert({
+                    id: user.id,
+                    email: user.email,
+                    bio,
+                    avatar_url: avatarUrl ?? undefined
+                });
+
+            if (dbError) throw dbError;
+
             alert("Cadastro finalizado com sucesso!");
             navigate("/");
+
+        } catch (err) {
+            console.error(err);
+            alert(err.message || "Erro no cadastro");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -51,6 +105,8 @@ function CadasterUser() {
 
             <input 
                 type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files[0])}
             />
 
             <input
@@ -62,13 +118,13 @@ function CadasterUser() {
 
             <input
                 type="text"
-                placeholder='Bio'
+                placeholder="Bio"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
             />
 
-            <button onClick={handleCadasterUser}>
-                Finalizar Cadastro
+            <button onClick={handleCadasterUser} disabled={loading}>
+                {loading ? "Salvando..." : "Finalizar Cadastro"}
             </button>
         </>
     );

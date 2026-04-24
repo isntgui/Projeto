@@ -13,12 +13,13 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        {/* <Route path="/login-page" element={<App />} /> */}
+        <Route path="/login-page" element={<App />} />
+        {/* <Route path="/" element={<App />} /> */}
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/home-page" element={<Home />} />
+        {/* <Route path="/home-page" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/cadaster-page" element={<CadasterUser />} />
       </Routes>
     </BrowserRouter>
