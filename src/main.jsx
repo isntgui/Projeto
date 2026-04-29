@@ -2,25 +2,31 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import App from './screens/App.jsx';
-import ForgetPassword from './screens/forgetPassword.jsx';
-import ResetPassword from './screens/resetPassword.jsx';
-import VerifyEmail from './screens/verifyEmail.jsx';
-import Home from './screens/home.jsx';
-import CadasterUser from './screens/cadasterUser.jsx';
+// auth pages
+import Login from './pages/auth/Login.jsx';
+import ForgotPassword from './pages/auth/ForgotPassword.jsx';
+import ResetPassword from './pages/auth/ResetPassword.jsx';
+import Register from './pages/auth/Register.jsx';
+import CompleteProfile from './pages/auth/CompleteProfile.jsx';
+
+// feed pages
+import Feed from './pages/home/Feed.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/login-page" element={<App />} />
-        {/* <Route path="/" element={<App />} /> */}
-        <Route path="/forget-password" element={<ForgetPassword />} />
+        
+        { /* Rotas de autenticação */ }
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        {/* <Route path="/home-page" element={<Home />} /> */}
-        <Route path="/" element={<Home />} />
-        <Route path="/cadaster-page" element={<CadasterUser />} />
+        <Route path="/complete-profile" element={<CompleteProfile />} />
+        
+        { /* Rotas do feed */ }
+        <Route path="/home" element={<Feed />} />
+
       </Routes>
     </BrowserRouter>
   </StrictMode>

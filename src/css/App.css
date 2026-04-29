@@ -1,53 +1,17 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 100px;
-
-    padding: 50px;
-    border: 2px solid #333;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
-
-.container input {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.input-password-wrapper {
-    position: relative;
-    width: 100%;
-    margin: 0;
-}
-
-.input-password-wrapper input {
-    width: 100%;
-    padding: 8px 35px 8px 8px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-.eye-button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
+.link {
+    background: none;
     border: none;
+    color: #4f46e5;
+    font-size: 14px;
     cursor: pointer;
+    text-align: center;
     padding: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
+    margin-top: 8px;
+    width: 100%;
+    transition: 0.2s;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: #4338ca;
 }

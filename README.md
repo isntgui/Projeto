@@ -13,7 +13,6 @@
 <ul>
     <li style="font-family: 'Courier New', monospace;">React</li>
     <li style="font-family: 'Courier New', monospace;">Supabase</li>
-    <li style="font-family: 'Courier New', monospace;">Bootstrap</li>
 </ul>
 
 <hr>
