@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import '../../css/global.css';
-import '../../css/completeUser.css';
+import '../../css/auth/CompleteProfile.css';
 
 export default function CompleteProfile() {
   const navigate = useNavigate();

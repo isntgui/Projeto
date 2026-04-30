@@ -1,0 +1,151 @@
+.navbar {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    background-color: #222;
+    color: #fff;
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.nav-left {
+    justify-content: flex-start;
+}
+
+.nav-center {
+    justify-content: center;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.app-name {
+    cursor: pointer;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.logout-btn img {
+    width: 28px;
+}
+
+.nav-btn:hover {
+    opacity: 0.7;
+}
+
+.logout-icon {
+    fill: white;
+    transition: 0.2s;
+}
+
+.logout-icon:hover {
+    fill: #ff4d4d;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999;
+
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-box {
+    background: #ffffff;
+    width: 340px;
+    max-width: 90%;
+
+    border-radius: 16px;
+    padding: 24px;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+
+    transform: scale(0.9);
+    animation: popIn 0.2s ease forwards;
+}
+
+.modal-box p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 10px 0;
+
+    border-radius: 10px;
+    border: none;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.modal-actions button:first-child {
+    background: #e53935;
+    color: white;
+}
+
+.modal-actions button:first-child:hover {
+    background: #c62828;
+    transform: translateY(-1px);
+}
+
+.modal-actions button:last-child {
+    background: #f1f1f1;
+    color: #333;
+}
+
+.modal-actions button:last-child:hover {
+    background: #ddd;
+    transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popIn {
+    to {
+        transform: scale(1);
+    }
+}

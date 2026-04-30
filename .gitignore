@@ -27,4 +27,5 @@ dist-ssr
 .env
 
 anotations.txt
+users.txt
 /nbproject/private/

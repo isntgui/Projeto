@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../css/App.css';
+import '../../css/auth/Login.css';
 import '../../css/global.css';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +9,12 @@ import EyeOffIcon from '../../assets/eyeoff.svg';
 export default function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [senha, setSenha] = useState('');
+
+  const [email, setEmail] = useState('agnelosouza2007@gmail.com');
+  const [senha, setSenha] = useState('teste10');
+
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
