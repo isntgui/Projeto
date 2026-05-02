@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import '../../css/auth/Login.css';
-import '../../css/global.css';
-import { supabase } from '../../lib/supabase';
-import { useNavigate } from 'react-router-dom';
-import EyeIcon from '../../assets/eye.svg';
-import EyeOffIcon from '../../assets/eyeoff.svg';
+import React, { useState } from "react";
+import "../../css/auth/Login.css";
+import "../../css/global.css";
+import { supabase } from "../../lib/supabase";
+import { useNavigate } from "react-router-dom";
+import EyeIcon from "../../assets/eye.svg";
+import EyeOffIcon from "../../assets/eyeoff.svg";
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function Login() {
     e.preventDefault();
 
     if (!email || !senha) {
-      alert('Preencha email e senha!');
+      alert("Preencha email e senha!");
       return;
     }
 
@@ -27,29 +27,29 @@ export default function Login() {
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
-      password: senha
+      password: senha,
     });
 
     setLoading(false);
 
     if (error) {
-      if (error.message.includes('Invalid login credentials')) {
-        alert('Email ou senha estão incorretos');
+      if (error.message.includes("Invalid login credentials")) {
+        alert("Email ou senha estão incorretos");
       } else {
-        alert('Erro: ' + error.message);
+        alert("Erro: " + error.message);
       }
     } else {
-      alert('Logado!');
-      navigate('/home');
+      alert("Logado!");
+      navigate("/home");
     }
   }
 
   function handleForgetPassword() {
-    navigate('/forgot-password');
+    navigate("/forgot-password");
   }
 
   function handleRegisterUser() {
-    navigate('/register');
+    navigate("/register");
   }
 
   return (
@@ -68,7 +68,7 @@ export default function Login() {
       <label>Senha</label>
       <div className="input-group">
         <input
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
           placeholder="Senha"
@@ -80,17 +80,14 @@ export default function Login() {
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => setShowPassword((prev) => !prev)}
           className="toggle-password"
-          aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+          aria-label={showPassword ? "Esconder senha" : "Mostrar senha"}
         >
-          <img
-            src={showPassword ? EyeOffIcon : EyeIcon}
-            className=''
-          />
+          <img src={showPassword ? EyeOffIcon : EyeIcon} />
         </button>
       </div>
 
       <button type="submit" className="btn" disabled={loading}>
-        {loading ? 'Entrando...' : 'Entrar'}
+        {loading ? "Entrando..." : "Entrar"}
       </button>
 
       <button
@@ -101,11 +98,7 @@ export default function Login() {
         Cadastrar
       </button>
 
-      <button
-        type="button"
-        onClick={handleForgetPassword}
-        className="link"
-      >
+      <button type="button" onClick={handleForgetPassword} className="link">
         Esqueceu a senha?
       </button>
     </form>
