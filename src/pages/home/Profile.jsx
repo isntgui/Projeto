@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import Navbar from '../../components/navbar';
 import '../../css/feed/Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
+
+    const navigate = useNavigate();
     
     const [userName, setUserName] = useState('');
     const [avatarUrl, setAvatarUrl] = useState('');
@@ -38,10 +41,8 @@ export default function Profile() {
     return (
         <>
             <Navbar />
-
-            <div>
+            <div className="profile-container">
                 <h2>Perfil do usuário</h2>
-
                 {avatarUrl && (
                     <img 
                         src={avatarUrl}
@@ -50,10 +51,19 @@ export default function Profile() {
                     />
                 )}
 
-                <p><strong>Usuário:</strong> {userName}</p>
-                <p><strong>Nome Completo</strong> {userNameComplete}</p>
-                <p><strong>Email:</strong> {userEmail}</p>
-                <p><strong>Bio:</strong> {userBio}</p>
+                <div className="profile-info">
+                    <p><strong>Usuário:</strong> {userName}</p>
+                    <p><strong>Nome Completo:</strong> {userNameComplete}</p>
+                    <p><strong>Email:</strong> {userEmail}</p>
+                    <p><strong>Bio:</strong> {userBio}</p>
+                </div>
+
+                <button
+                    className="edit-button"
+                    onClick={() => navigate('/edit-profile')}
+                >
+                    Editar perfil
+                </button>
             </div>
         </>
     );

@@ -9,11 +9,8 @@ import EyeOffIcon from '../../assets/eyeoff.svg';
 export default function Login() {
   const navigate = useNavigate();
 
-//   const [email, setEmail] = useState('');
-//   const [senha, setSenha] = useState('');
-
-  const [email, setEmail] = useState('agnelosouza2007@gmail.com');
-  const [senha, setSenha] = useState('teste10');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,7 +25,7 @@ export default function Login() {
 
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password: senha
     });
@@ -43,7 +40,6 @@ export default function Login() {
       }
     } else {
       alert('Logado!');
-      console.log(data);
       navigate('/home');
     }
   }

@@ -90,7 +90,7 @@ export default function CompleteProfile() {
 
   return (
     <form className="form" onSubmit={handleCompleteUser}>
-      <h1>Complete seu perfil</h1>
+    <h1>Complete seu perfil</h1>
 
       <p className="form-info">{user?.email}</p>
 
@@ -110,20 +110,21 @@ export default function CompleteProfile() {
       />
 
       <div className="avatar-container">
-        <label htmlFor="avatarInput" style={{ cursor: 'pointer' }}>
-          {preview ? (
-            <img
-              src={preview}
-              alt="Preview photo-profile"
-              className="avatar"
-            />
-          ) : (
-            <div className="avatar placeholder">
-              <span>+</span>
+        <label htmlFor="avatarInput" className="avatar-input">
+            <div className="avatar">
+            {preview ? (
+                <img
+                src={preview}
+                alt="Avatar"
+                />
+            ) : (
+                <div className="placeholder-content">
+                <span>+</span>
+                </div>
+            )}
             </div>
-          )}
         </label>
-      </div>
+        </div>
 
       <input
         type="text"

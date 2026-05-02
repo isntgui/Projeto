@@ -12,6 +12,8 @@ import CompleteProfile from './pages/auth/CompleteProfile.jsx';
 // feed pages
 import Feed from './pages/home/Feed.jsx';
 import Profile from './pages/home/Profile.jsx';
+import EditProfile from './pages/home/EditProfile.jsx';
+import Post from './pages/home/Post.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -28,6 +30,8 @@ createRoot(document.getElementById('root')).render(
         { /* Rotas do feed */ }
         <Route path="/home" element={<Feed />} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/post" element={<Post />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

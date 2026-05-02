@@ -32,6 +32,13 @@ export default function Navbar() {
                 >
                     Ver Perfil
                 </button>
+
+                <button
+                    className="nav-btn"
+                    onClick={() => navigate('/post')}
+                >
+                    Postar
+                </button>
             </div>
 
             <div className="nav-right">
