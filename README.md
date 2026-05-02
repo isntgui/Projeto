@@ -1,9 +1,9 @@
-<h1> Oka </h1>
+<h1> Comunidade </h1>
 
 <div>
     <h3 style="font-weight: bold;">Objetivo</h3>
     <p style="font-family: Arial, sans-serif;">
-        Início de um projeto focado para uma rede social
+        Início de um projeto focado em comunidades e gostos pessoais (como por exemplo em orkut)
     </p>
 </div>
 
