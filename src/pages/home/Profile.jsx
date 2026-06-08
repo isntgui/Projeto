@@ -7,35 +7,37 @@ import { useNavigate } from 'react-router-dom';
 export default function Profile() {
 
     const navigate = useNavigate();
-    
+
     const [userName, setUserName] = useState('');
     const [avatarUrl, setAvatarUrl] = useState('');
     const [userNameComplete, setUserNameComplete] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userBio, setUserBio] = useState('');
+    const [hobbies, setHobbies] = useState([]);
 
     useEffect(() => {
-            async function getProfile() {
-                const { data: { user }} = await supabase.auth.getUser();
-    
-                if (user) {
-                    const { data } = await supabase
-                        .from('users')
-                        .select('user_name, name, email, bio, avatar_url')
-                        .eq('id', user.id)
-                        .single();
-    
-                    if (data) {
-                        setUserName(data.user_name);
-                        setUserNameComplete(data.name);
-                        setUserEmail(data.email);
-                        setUserBio(data.bio);
-                        setAvatarUrl(data.avatar_url);
-                    }
+        async function getProfile() {
+            const { data: { user } } = await supabase.auth.getUser();
+
+            if (user) {
+                const { data } = await supabase
+                    .from('users')
+                    .select('user_name, name, email, bio, avatar_url, hobbies')
+                    .eq('id', user.id)
+                    .single();
+
+                if (data) {
+                    setUserName(data.user_name);
+                    setUserNameComplete(data.name);
+                    setUserEmail(data.email);
+                    setUserBio(data.bio);
+                    setAvatarUrl(data.avatar_url);
+                    setHobbies(data.hobbies || []);
                 }
             }
-    
-            getProfile();
+        }
+
+        getProfile();
     }, []);
 
     return (
@@ -44,7 +46,7 @@ export default function Profile() {
             <div className="profile-container">
                 <h2>Perfil do usuário</h2>
                 {avatarUrl && (
-                    <img 
+                    <img
                         src={avatarUrl}
                         alt='Foto do perfil'
                         className='photo-profile'
@@ -56,6 +58,7 @@ export default function Profile() {
                     <p><strong>Nome Completo:</strong> {userNameComplete}</p>
                     <p><strong>Email:</strong> {userEmail}</p>
                     <p><strong>Bio:</strong> {userBio}</p>
+                    <p><strong>Preferências:</strong> {hobbies.join(', ')} </p>
                 </div>
 
                 <button

@@ -76,3 +76,39 @@
     color: #999;
     font-size: 42px;
 }
+
+.hobbies-section {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.hobbies-section h3 {
+    margin-bottom: 12px;
+    color: black;
+}
+
+.hobbies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hobby-card {
+    border: 2px solid #444;
+    background: transparent;
+    color: rgb(0, 0, 0);
+    padding: 10px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.hobby-card:hover {
+    transform: translateY(-2px);
+}
+
+.hobby-card.selected {
+    background: #6c63ff;
+    border-color: #6c63ff;
+    color: white;
+}

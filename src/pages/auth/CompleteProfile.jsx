@@ -7,6 +7,31 @@ import '../../css/auth/CompleteProfile.css';
 export default function CompleteProfile() {
   const navigate = useNavigate();
 
+  const hobbiesList = [
+    "Viagem",
+    "Corrida",
+    "Academia",
+    "Futebol",
+    "Vôlei",
+    "Basquete",
+    "Ciclismo",
+    "Natação",
+    "Leitura",
+    "Música",
+    "Cinema",
+    "Dança",
+    "Yoga",
+    "Passeios de carro",
+    "Passeio ao ar livre",
+    "Compras",
+    "Jardinagem",
+    "Escalada",
+    "Praia",
+    "Pescar",
+    "Acampar",
+    "Trilhas"
+  ];
+
   const [preview, setPreview] = useState(null);
   const [user, setUser] = useState(null);
   const [name, setName] = useState('');
@@ -14,6 +39,7 @@ export default function CompleteProfile() {
   const [bio, setBio] = useState('');
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [hobbies, setHobbies] = useState([]);
 
   useEffect(() => {
     async function loadSession() {
@@ -30,6 +56,14 @@ export default function CompleteProfile() {
 
     loadSession();
   }, [navigate]);
+
+  function toggleHobby(hobby) {
+    setHobbies((prev) => {
+      return prev.includes(hobby)
+        ? prev.filter((h) => h !== hobby)
+        : [...prev, hobby]
+    });
+  }
 
   async function uploadAvatar() {
     if (!file) return null;
@@ -72,7 +106,8 @@ export default function CompleteProfile() {
           name,
           user_name: userName,
           bio,
-          avatar_url: avatarUrl ?? null
+          avatar_url: avatarUrl ?? null,
+          hobbies
         });
 
       if (dbError) throw dbError;
@@ -90,7 +125,7 @@ export default function CompleteProfile() {
 
   return (
     <form className="form" onSubmit={handleCompleteUser}>
-    <h1>Complete seu perfil</h1>
+      <h1>Complete seu perfil</h1>
 
       <p className="form-info">{user?.email}</p>
 
@@ -111,20 +146,20 @@ export default function CompleteProfile() {
 
       <div className="avatar-container">
         <label htmlFor="avatarInput" className="avatar-input">
-            <div className="avatar">
+          <div className="avatar">
             {preview ? (
-                <img
+              <img
                 src={preview}
                 alt="Avatar"
-                />
+              />
             ) : (
-                <div className="placeholder-content">
+              <div className="placeholder-content">
                 <span>+</span>
-                </div>
+              </div>
             )}
-            </div>
+          </div>
         </label>
-        </div>
+      </div>
 
       <input
         type="text"
@@ -148,6 +183,24 @@ export default function CompleteProfile() {
         onChange={(e) => setBio(e.target.value)}
         className="textarea"
       />
+
+      <div className="hobbies-section">
+        <h3>Selecione suas prefêrencias</h3>
+
+        <div className="hobbies-grid">
+          {hobbiesList.map((hobby) => (
+            <button
+              key={hobby}
+              type="button"
+              className={`hobby-card ${hobbies.includes(hobby) ? 'selected' : ""
+                }`}
+              onClick={() => toggleHobby(hobby)}
+            >
+              {hobby}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <button type="submit" className="btn" disabled={loading}>
         {loading ? "Salvando..." : "Finalizar Cadastro"}

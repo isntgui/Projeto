@@ -3,17 +3,43 @@ import { supabase } from '../../lib/supabase';
 import Navbar from '../../components/navbar';
 import { useNavigate } from 'react-router-dom';
 import '../../css/feed/EditProfile.css';
+import Back from '../../assets/arrow_back.svg';
 
 export default function EditProfile() {
     const navigate = useNavigate();
 
+    const hobbiesList = [
+        "Viagem",
+        "Corrida",
+        "Academia",
+        "Futebol",
+        "Vôlei",
+        "Basquete",
+        "Ciclismo",
+        "Natação",
+        "Leitura",
+        "Música",
+        "Cinema",
+        "Dança",
+        "Yoga",
+        "Passeios de carro",
+        "Passeio ao ar livre",
+        "Compras",
+        "Jardinagem",
+        "Escalada",
+        "Praia",
+        "Pescar",
+        "Acampar",
+        "Trilhas"
+    ];
+
+    const [hobbies, setHobbies] = useState([]);
     const [user, setUser] = useState(null);
     const [userName, setUserName] = useState('');
     const [preview, setPreview] = useState(null);
     const [file, setFile] = useState(null);
     const [avatarUrl, setAvatarUrl] = useState('');
     const [userNameComplete, setUserNameComplete] = useState('');
-    const [userEmail, setUserEmail] = useState('');
     const [userBio, setUserBio] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -39,20 +65,28 @@ export default function EditProfile() {
             if (profile) {
                 setUserName(profile.user_name || '');
                 setUserNameComplete(profile.name || '');
-                setUserEmail(profile.email || '');
                 setUserBio(profile.bio || '');
                 setAvatarUrl(profile.avatar_url || '');
+                setHobbies(profile.hobbies || []);
             }
         }
 
         loadProfile();
     }, [navigate]);
 
+    function toggleHobby(hobby) {
+        setHobbies(prev =>
+            prev.includes(hobby)
+                ? prev.filter(h => h !== hobby)
+                : [...prev, hobby]
+        );
+    }
+
     async function uploadAvatar() {
         if (!file || !user) return null;
 
         const fileExt = file.type.split('/')[1];
-        
+
         const filePath = `${user.id}/avatar_${Date.now()}.${fileExt}`;
 
         const { error } = await supabase.storage
@@ -86,9 +120,9 @@ export default function EditProfile() {
                 .update({
                     user_name: userName,
                     name: userNameComplete,
-                    email: userEmail,
                     bio: userBio,
-                    avatar_url: finalAvatar
+                    avatar_url: finalAvatar,
+                    hobbies
                 })
                 .eq('id', user.id);
 
@@ -106,7 +140,17 @@ export default function EditProfile() {
             <Navbar />
 
             <div className="edit-container">
-                <h2>Editar perfil</h2>
+                <div className="header-edit">
+                    <button
+                        type="button"
+                        className="back-button"
+                        onClick={() => navigate(-1)}
+                    >
+                        <img src={Back} alt="Voltar" />
+                    </button>
+
+                    <h2>Editar perfil</h2>
+                </div>
 
                 <input
                     id="avatarInput"
@@ -159,15 +203,6 @@ export default function EditProfile() {
                 </div>
 
                 <div className="form-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={userEmail}
-                        onChange={(e) => setUserEmail(e.target.value)}
-                    />
-                </div>
-
-                <div className="form-group">
                     <label>Bio</label>
                     <textarea
                         value={userBio}
@@ -175,7 +210,25 @@ export default function EditProfile() {
                     />
                 </div>
 
-                <button 
+                <div className="hobbies-section">
+                    <label>Preferências</label>
+
+                    <div className="hobbies-grid">
+                        {hobbiesList.map((hobby) => (
+                            <button
+                                key={hobby}
+                                type="button"
+                                className={`hobby-card ${hobbies.includes(hobby) ? 'selected' : ''
+                                    }`}
+                                onClick={() => toggleHobby(hobby)}
+                            >
+                                {hobby}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <button
                     className="save-button"
                     onClick={handleSave}
                     disabled={loading}

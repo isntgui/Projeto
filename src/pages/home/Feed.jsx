@@ -1,4 +1,4 @@
-import { React, useEffect, useState} from 'react';
+import { React, useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import Navbar from '../../components/navbar';
 import Logout from '../../assets/logout.svg';
@@ -8,7 +8,7 @@ export default function Feed() {
 
     useEffect(() => {
         async function getProfile() {
-            const { data: { user }} = await supabase.auth.getUser();
+            const { data: { user } } = await supabase.auth.getUser();
 
             if (user) {
                 const { data } = await supabase
@@ -29,8 +29,8 @@ export default function Feed() {
     return (
         <>
             <Navbar />
-            <h1>Seja bem vindo { userName } a sua tela de ínicio!</h1>
-            <p>Aqui será apresentado ao o seu feed</p>
+            <h1>Seja bem vindo {userName} a sua tela de ínicio!</h1>
+            <p>Aqui será apresentado ao seu feed</p>
         </>
     )
 }

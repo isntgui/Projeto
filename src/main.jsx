@@ -21,10 +21,12 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         {/* Rotas de autenticação */}
         <Route path="/" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/complete-profile" element={<CompleteProfile />} />
+        {/* <Route path="/" element={<CompleteProfile />} /> */}
 
         {/* Rotas do feed */}
         <Route path="/home" element={<Feed />} />

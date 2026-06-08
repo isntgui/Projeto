@@ -13,6 +13,42 @@
     margin-bottom: 20px;
 }
 
+.header-edit {
+    display: flex;
+    align-items: center;
+    gap: 110px;
+    margin-bottom: 20px;
+}
+
+.header-edit h2 {
+    margin: 0;
+}
+
+.back-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.back-button img {
+    width: 22px;
+    height: 22px;
+}
+
 .avatar-preview {
     display: block;
     margin: 0 auto 20px;
@@ -72,4 +108,40 @@
 .save-button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.hobbies-section {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.hobbies-section h3 {
+    margin-bottom: 12px;
+    color: black;
+}
+
+.hobbies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hobby-card {
+    border: 2px solid #444;
+    background: #fff;
+    color: rgb(0, 0, 0);
+    padding: 10px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.hobby-card:hover {
+    transform: translateY(-2px);
+}
+
+.hobby-card.selected {
+    background: #6c63ff;
+    border-color: #6c63ff;
+    color: white;
 }
