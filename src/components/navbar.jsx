@@ -17,8 +17,8 @@ export default function Navbar() {
     return (
         <nav className="navbar">
             <div className="nav-left">
-                <h2 
-                    className="app-name" 
+                <h2
+                    className="app-name"
                     onClick={() => navigate('/home')}
                 >
                     Nome APP
@@ -26,7 +26,7 @@ export default function Navbar() {
             </div>
 
             <div className="nav-center">
-                <button 
+                <button
                     className="nav-btn"
                     onClick={() => navigate('/profile')}
                 >
@@ -35,14 +35,14 @@ export default function Navbar() {
 
                 <button
                     className="nav-btn"
-                    onClick={() => navigate('/post')}
+                    onClick={() => navigate('/create-post')}
                 >
                     Postar
                 </button>
             </div>
 
             <div className="nav-right">
-                <button 
+                <button
                     className="nav-btn logout-btn"
                     onClick={() => setShowModal(true)}
                 >
@@ -53,17 +53,17 @@ export default function Navbar() {
                         width='28'
                         className='logout-icon'
                     >
-                        <path d='M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z'/>
+                        <path d='M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z' />
                     </svg>
                 </button>
             </div>
 
             {showModal && (
-                <div 
+                <div
                     className='modal-overlay'
                     onClick={() => setShowModal(false)}
                 >
-                    <div 
+                    <div
                         className='modal-box'
                         onClick={(e) => e.stopPropagation()}
                     >
