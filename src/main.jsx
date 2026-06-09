@@ -14,6 +14,7 @@ import Feed from "./pages/home/Feed.jsx";
 import Profile from "./pages/home/Profile.jsx";
 import EditProfile from "./pages/home/EditProfile.jsx";
 import Post from "./pages/home/Post.jsx";
+import CreateFeed from './pages/home/CreatePost.jsx';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/post" element={<Post />} />
+        <Route path="/create-post" element={<CreateFeed />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
