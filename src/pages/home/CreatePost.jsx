@@ -24,7 +24,7 @@ const hobbiesList = [
     "Praia",
     "Pescar",
     "Acampar",
-    "Trilhas"
+    "Trilhas",
 ];
 
 export default function CreatePost() {
@@ -35,7 +35,7 @@ export default function CreatePost() {
         setSelectedCategories((prev) =>
             prev.includes(category)
                 ? prev.filter((c) => c !== category)
-                : [...prev, category]
+                : [...prev, category],
         );
     };
 
@@ -63,17 +63,16 @@ export default function CreatePost() {
                 return;
             }
 
-            const { data: post, error: postError } =
-                await supabase
-                    .from("post")
-                    .insert({
-                        user_id: user.id,
-                        title,
-                        content,
-                        categories: selectedCategories,
-                    })
-                    .select()
-                    .single();
+            const { data: post, error: postError } = await supabase
+                .from("post")
+                .insert({
+                    user_id: user.id,
+                    title,
+                    content,
+                    categories: selectedCategories,
+                })
+                .select()
+                .single();
 
             if (postError) {
                 console.error(postError);
@@ -82,34 +81,29 @@ export default function CreatePost() {
             }
 
             for (const image of images) {
-                const extension =
-                    image.name.split(".").pop();
+                const extension = image.name.split(".").pop();
 
-                const fileName =
-                    `${crypto.randomUUID()}.${extension}`;
+                const fileName = `${crypto.randomUUID()}.${extension}`;
 
-                const filePath =
-                    `${post.id}/${fileName}`;
+                const filePath = `${post.id}/${fileName}`;
 
-                const { error: uploadError } =
-                    await supabase.storage
-                        .from("posts")
-                        .upload(filePath, image);
+                const { error: uploadError } = await supabase.storage
+                    .from("posts")
+                    .upload(filePath, image);
 
                 if (uploadError) {
                     console.error(uploadError);
                     continue;
                 }
 
-                const { error: mediaError } =
-                    await supabase
-                        .from("post_media")
-                        .insert({
-                            user_id: user.id,
-                            post_id: post.id,
-                            media_type: "image",
-                            storage_path: filePath,
-                        });
+                const { error: mediaError } = await supabase
+                    .from("post_media")
+                    .insert({
+                        user_id: user.id,
+                        post_id: post.id,
+                        media_type: "image",
+                        storage_path: filePath,
+                    });
 
                 if (mediaError) {
                     console.error(mediaError);
@@ -134,9 +128,7 @@ export default function CreatePost() {
                 <h1>Crie o seu feed</h1>
 
                 <div>
-                    <label htmlFor="feedTitle">
-                        Título do feed:
-                    </label>
+                    <label htmlFor="feedTitle">Título do feed:</label>
 
                     <input
                         type="text"
@@ -149,9 +141,7 @@ export default function CreatePost() {
                 <br />
 
                 <div>
-                    <label htmlFor="feedContent">
-                        Conteúdo do feed:
-                    </label>
+                    <label htmlFor="feedContent">Conteúdo do feed:</label>
 
                     <textarea
                         id="feedContent"
@@ -176,15 +166,9 @@ export default function CreatePost() {
                         >
                             <input
                                 type="checkbox"
-                                checked={selectedCategories.includes(
-                                    hobby
-                                )}
-                                onChange={() =>
-                                    handleCategoryChange(hobby)
-                                }
-                            />
-
-                            {" "}
+                                checked={selectedCategories.includes(hobby)}
+                                onChange={() => handleCategoryChange(hobby)}
+                            />{" "}
                             {hobby}
                         </label>
                     ))}
@@ -193,9 +177,7 @@ export default function CreatePost() {
                 <br />
 
                 <div>
-                    <label htmlFor="images">
-                        Adicionar imagens
-                    </label>
+                    <label htmlFor="images">Adicionar imagens</label>
 
                     <input
                         id="images"
@@ -203,9 +185,7 @@ export default function CreatePost() {
                         accept="image/*"
                         multiple
                         onChange={(e) =>
-                            setImages(
-                                Array.from(e.target.files || [])
-                            )
+                            setImages(Array.from(e.target.files || []))
                         }
                     />
                 </div>
@@ -213,18 +193,13 @@ export default function CreatePost() {
                 {images.length > 0 && (
                     <>
                         <br />
-                        <p>
-                            {images.length} imagem(ns)
-                            selecionada(s)
-                        </p>
+                        <p>{images.length} imagem(ns) selecionada(s)</p>
                     </>
                 )}
 
                 <br />
 
-                <button type="submit">
-                    Publicar
-                </button>
+                <button type="submit">Publicar</button>
             </form>
         </>
     );

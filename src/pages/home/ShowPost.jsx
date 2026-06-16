@@ -9,22 +9,62 @@ export default function PostPage() {
     const navigate = useNavigate();
 
     const { id } = useParams();
+
     const [post, setPost] = useState(null);
+    const [images, setImages] = useState([]);
+    const [author, setAuthor] = useState(null);
 
     useEffect(() => {
         async function loadPost() {
-            const { data, error } = await supabase
+            const { data: postData, error: postError } = await supabase
                 .from("post")
                 .select("*")
                 .eq("id", id)
                 .single();
 
-            if (error) {
-                console.error(error);
+            if (postError) {
+                console.error(postError);
                 return;
             }
 
-            setPost(data);
+            setPost(postData);
+
+            // Buscar autor
+            const { data: authorData, error: authorError } = await supabase
+                .from("users")
+                .select("user_name, avatar_url")
+                .eq("id", postData.user_id)
+                .single();
+
+            if (authorError) {
+                console.error(authorError);
+            } else {
+                setAuthor(authorData);
+            }
+
+            // Buscar imagens do post
+            const { data: mediaData, error: mediaError } = await supabase
+                .from("post_media")
+                .select("*")
+                .eq("post_id", id)
+                .eq("media_type", "image");
+
+            if (mediaError) {
+                console.error(mediaError);
+                return;
+            }
+
+            const imageUrls = mediaData.map((media) => {
+                const {
+                    data: { publicUrl },
+                } = supabase.storage
+                    .from("posts")
+                    .getPublicUrl(media.storage_path);
+
+                return publicUrl;
+            });
+
+            setImages(imageUrls);
         }
 
         loadPost();
@@ -38,16 +78,72 @@ export default function PostPage() {
         <>
             <Navbar />
 
-            <button
-                type="button"
-                className="back-button"
-                onClick={() => navigate(-1)}
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    padding: "20px",
+                }}
             >
-                <img src={Back} alt="Voltar" />
-            </button>
+                <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                >
+                    <img src={Back} alt="Voltar" style={{ width: "24px" }} />
+                </button>
+
+                {author && (
+                    <>
+                        <img
+                            src={author.avatar_url}
+                            alt={author.user_name}
+                            style={{
+                                width: "48px",
+                                height: "48px",
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                            }}
+                        />
+
+                        <strong>{author.user_name}</strong>
+                    </>
+                )}
+            </div>
 
             <div style={{ padding: "20px" }}>
                 <h1>{post.title}</h1>
+
+                {images.length > 0 && (
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "10px",
+                            flexWrap: "wrap",
+                            marginBottom: "20px",
+                        }}
+                    >
+                        {images.map((url, index) => (
+                            <img
+                                key={index}
+                                src={url}
+                                alt={`Imagem ${index + 1}`}
+                                style={{
+                                    maxWidth: "300px",
+                                    borderRadius: "8px",
+                                }}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 <p>{post.content}</p>
 
