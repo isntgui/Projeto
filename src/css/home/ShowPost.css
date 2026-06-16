@@ -1,0 +1,12 @@
+.back-button {
+    color: black;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}

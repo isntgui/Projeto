@@ -13,29 +13,29 @@ import CompleteProfile from "./pages/auth/CompleteProfile.jsx";
 import Feed from "./pages/home/Feed.jsx";
 import Profile from "./pages/home/Profile.jsx";
 import EditProfile from "./pages/home/EditProfile.jsx";
-import Post from "./pages/home/Post.jsx";
-import CreateFeed from './pages/home/CreatePost.jsx';
+import CreateFeed from "./pages/home/CreatePost.jsx";
+import Post from "./pages/home/ShowPost.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* Rotas de autenticação */}
-        <Route path="/" element={<Login />} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/complete-profile" element={<CompleteProfile />} />
-        {/* <Route path="/" element={<CompleteProfile />} /> */}
+    <StrictMode>
+        <BrowserRouter>
+            <Routes>
+                {/* Rotas de autenticação */}
+                <Route path="/" element={<Login />} />
+                {/* <Route path="/login" element={<Login />} /> */}
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/complete-profile" element={<CompleteProfile />} />
+                {/* <Route path="/" element={<CompleteProfile />} /> */}
 
-        {/* Rotas do feed */}
-        <Route path="/home" element={<Feed />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/create-post" element={<CreateFeed />} />
-      </Routes>
-    </BrowserRouter>
-  </StrictMode>,
+                {/* Rotas do feed */}
+                <Route path="/home" element={<Feed />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/edit-profile" element={<EditProfile />} />
+                <Route path="/create-post" element={<CreateFeed />} />
+                <Route path="/post/:id" element={<Post />} />
+            </Routes>
+        </BrowserRouter>
+    </StrictMode>,
 );

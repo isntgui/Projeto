@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
-import Navbar from '../../components/navbar';
-import { useNavigate } from 'react-router-dom';
-import '../../css/feed/EditProfile.css';
-import Back from '../../assets/arrow_back.svg';
+import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabase";
+import Navbar from "../../components/navbar";
+import { useNavigate } from "react-router-dom";
+import "../../css/home/EditProfile.css";
+import Back from "../../assets/arrow_back.svg";
 
 export default function EditProfile() {
     const navigate = useNavigate();
@@ -30,17 +30,17 @@ export default function EditProfile() {
         "Praia",
         "Pescar",
         "Acampar",
-        "Trilhas"
+        "Trilhas",
     ];
 
     const [hobbies, setHobbies] = useState([]);
     const [user, setUser] = useState(null);
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState("");
     const [preview, setPreview] = useState(null);
     const [file, setFile] = useState(null);
-    const [avatarUrl, setAvatarUrl] = useState('');
-    const [userNameComplete, setUserNameComplete] = useState('');
-    const [userBio, setUserBio] = useState('');
+    const [avatarUrl, setAvatarUrl] = useState("");
+    const [userNameComplete, setUserNameComplete] = useState("");
+    const [userBio, setUserBio] = useState("");
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -57,16 +57,16 @@ export default function EditProfile() {
             setUser(currentUser);
 
             const { data: profile } = await supabase
-                .from('users')
-                .select('*')
-                .eq('id', currentUser.id)
+                .from("users")
+                .select("*")
+                .eq("id", currentUser.id)
                 .single();
 
             if (profile) {
-                setUserName(profile.user_name || '');
-                setUserNameComplete(profile.name || '');
-                setUserBio(profile.bio || '');
-                setAvatarUrl(profile.avatar_url || '');
+                setUserName(profile.user_name || "");
+                setUserNameComplete(profile.name || "");
+                setUserBio(profile.bio || "");
+                setAvatarUrl(profile.avatar_url || "");
                 setHobbies(profile.hobbies || []);
             }
         }
@@ -75,29 +75,27 @@ export default function EditProfile() {
     }, [navigate]);
 
     function toggleHobby(hobby) {
-        setHobbies(prev =>
+        setHobbies((prev) =>
             prev.includes(hobby)
-                ? prev.filter(h => h !== hobby)
-                : [...prev, hobby]
+                ? prev.filter((h) => h !== hobby)
+                : [...prev, hobby],
         );
     }
 
     async function uploadAvatar() {
         if (!file || !user) return null;
 
-        const fileExt = file.type.split('/')[1];
+        const fileExt = file.type.split("/")[1];
 
         const filePath = `${user.id}/avatar_${Date.now()}.${fileExt}`;
 
         const { error } = await supabase.storage
-            .from('users')
+            .from("users")
             .upload(filePath, file, { upsert: true });
 
         if (error) throw error;
 
-        const { data } = supabase.storage
-            .from('users')
-            .getPublicUrl(filePath);
+        const { data } = supabase.storage.from("users").getPublicUrl(filePath);
 
         return data.publicUrl;
     }
@@ -116,20 +114,20 @@ export default function EditProfile() {
             }
 
             await supabase
-                .from('users')
+                .from("users")
                 .update({
                     user_name: userName,
                     name: userNameComplete,
                     bio: userBio,
                     avatar_url: finalAvatar,
-                    hobbies
+                    hobbies,
                 })
-                .eq('id', user.id);
+                .eq("id", user.id);
 
-            alert('Perfil atualizado!');
+            alert("Perfil atualizado!");
         } catch (err) {
             console.error(err);
-            alert('Erro ao atualizar perfil');
+            alert("Erro ao atualizar perfil");
         } finally {
             setLoading(false);
         }
@@ -156,7 +154,7 @@ export default function EditProfile() {
                     id="avatarInput"
                     type="file"
                     accept="image/*"
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                     onChange={(e) => {
                         const selected = e.target.files[0];
                         setFile(selected);
@@ -169,7 +167,7 @@ export default function EditProfile() {
 
                 <div className="avatar-container">
                     <label htmlFor="avatarInput" className="avatar-input">
-                        {(preview || avatarUrl) ? (
+                        {preview || avatarUrl ? (
                             <img
                                 src={preview || avatarUrl}
                                 alt="Avatar"
@@ -218,8 +216,9 @@ export default function EditProfile() {
                             <button
                                 key={hobby}
                                 type="button"
-                                className={`hobby-card ${hobbies.includes(hobby) ? 'selected' : ''
-                                    }`}
+                                className={`hobby-card ${
+                                    hobbies.includes(hobby) ? "selected" : ""
+                                }`}
                                 onClick={() => toggleHobby(hobby)}
                             >
                                 {hobby}
@@ -233,7 +232,7 @@ export default function EditProfile() {
                     onClick={handleSave}
                     disabled={loading}
                 >
-                    {loading ? 'Salvando...' : 'Salvar alterações'}
+                    {loading ? "Salvando..." : "Salvar alterações"}
                 </button>
             </div>
         </>
