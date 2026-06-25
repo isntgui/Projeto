@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/navbar";
 import "../../css/home/CreatePost.css";
 
 export default function CreatePost() {
