@@ -3,6 +3,7 @@ import { supabase } from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Logout from "../../assets/logout.svg";
+import "../../css/home/Feed.css";
 
 export default function Feed() {
     const navigate = useNavigate();
@@ -37,7 +38,9 @@ export default function Feed() {
             content,
             categories,
             created_at,
-            user_id
+            user_id,
+            likes_count,
+            comments_count
         `,
                 )
                 .overlaps("categories", profile.hobbies)
@@ -58,41 +61,48 @@ export default function Feed() {
         <>
             <Navbar />
 
-            <h1>Seja bem vindo {userName}!</h1>
+            <div className="feed-container">
+                <h2 className="feed-welcome">Seja bem vindo {userName}!</h2>
 
-            <p>Aqui será apresentado seu feed</p>
+                <p>Aqui será apresentado seu feed</p>
 
-            <hr />
+                <hr />
 
-            {posts.length === 0 ? (
-                <p>Nenhum post encontrado.</p>
-            ) : (
-                posts.map((post) => (
-                    <div
-                        key={post.id}
-                        onClick={() => navigate(`/post/${post.id}`)}
-                        style={{
-                            border: "1px solid #ccc",
-                            padding: "16px",
-                            marginBottom: "16px",
-                            borderRadius: "8px",
-                            cursor: "pointer",
-                        }}
-                    >
-                        <h2>{post.title}</h2>
+                {posts.length === 0 ? (
+                    <p>Nenhum post encontrado.</p>
+                ) : (
+                    posts.map((post) => (
+                        <div
+                            key={post.id}
+                            className="feed-post"
+                            onClick={() => navigate(`/post/${post.id}`)}
+                        >
+                            <h2 className="feed-post-title">{post.title}</h2>
 
-                        <p>{post.content}</p>
+                            <p className="feed-post-content">{post.content}</p>
 
-                        <small>Categorias: {post.categories.join(", ")}</small>
+                            <div className="feed-post-meta">
+                                <span>
+                                    Categorias: {post.categories.join(", ")}
+                                </span>
 
-                        <br />
+                                <span> | </span>
 
-                        <small>
-                            {new Date(post.created_at).toLocaleString()}
-                        </small>
-                    </div>
-                ))
-            )}
+                                <span>
+                                    ❤️ {post.likes_count ?? 0} • 💬{" "}
+                                    {post.comments_count ?? 0}
+                                </span>
+
+                                <span> | </span>
+
+                                <span>
+                                    {new Date(post.created_at).toLocaleString()}
+                                </span>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
         </>
     );
 }
