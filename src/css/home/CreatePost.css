@@ -1,0 +1,132 @@
+.create-post-container {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 24px;
+    font-family: Arial, sans-serif;
+}
+
+.create-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.create-post-form h1 {
+    font-size: 26px;
+    margin-bottom: 8px;
+    color: #111;
+}
+
+.create-post-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.create-post-form input[type="text"],
+.create-post-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+
+    border-radius: 10px;
+    border: 1px solid #ddd;
+
+    outline: none;
+    font-size: 14px;
+
+    transition: 0.2s ease;
+    background: #fafafa;
+}
+
+.create-post-form input[type="text"]:focus,
+.create-post-form textarea:focus {
+    border-color: #222;
+    background: #fff;
+}
+
+.create-post-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.create-post-categories label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 12px;
+    border-radius: 10px;
+
+    background: #f5f5f5;
+    border: 1px solid transparent;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.create-post-categories label:hover {
+    background: #eee;
+}
+
+.create-post-categories input {
+    accent-color: #111;
+}
+
+.create-post-file {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 14px;
+    border: 1px dashed #ccc;
+    border-radius: 12px;
+
+    background: #fafafa;
+    transition: 0.2s;
+}
+
+.create-post-file:hover {
+    border-color: #999;
+    background: #f2f2f2;
+}
+
+.create-post-file input {
+    font-size: 13px;
+}
+
+.create-post-btn {
+    padding: 12px 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #111;
+    color: #fff;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.create-post-btn:hover {
+    background: #000;
+    transform: translateY(-1px);
+}
+
+.create-post-btn:active {
+    transform: scale(0.98);
+}

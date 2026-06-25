@@ -1,35 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import Navbar from "../../components/Navbar";
-
-const hobbiesList = [
-    "Viagem",
-    "Corrida",
-    "Academia",
-    "Futebol",
-    "Vôlei",
-    "Basquete",
-    "Ciclismo",
-    "Natação",
-    "Leitura",
-    "Música",
-    "Cinema",
-    "Dança",
-    "Yoga",
-    "Passeios de carro",
-    "Passeio ao ar livre",
-    "Compras",
-    "Jardinagem",
-    "Escalada",
-    "Praia",
-    "Pescar",
-    "Acampar",
-    "Trilhas",
-];
+import "../../css/home/CreatePost.css";
 
 export default function CreatePost() {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [images, setImages] = useState([]);
+    const [userHobbies, setUserHobbies] = useState([]);
+
+    useEffect(() => {
+        async function loadUserHobbies() {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (!user) return;
+
+            const { data, error } = await supabase
+                .from("users")
+                .select("hobbies")
+                .eq("id", user.id)
+                .single();
+
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            setUserHobbies(data?.hobbies ?? []);
+        }
+
+        loadUserHobbies();
+    }, []);
 
     const handleCategoryChange = (category) => {
         setSelectedCategories((prev) =>
@@ -123,84 +125,67 @@ export default function CreatePost() {
     return (
         <>
             <Navbar />
+            <div className="create-post-container">
+                <form onSubmit={handleSubmit} className="create-post-form">
+                    <h1>Crie o seu feed</h1>
 
-            <form onSubmit={handleSubmit}>
-                <h1>Crie o seu feed</h1>
+                    <div>
+                        <label>Título do feed</label>
+                        <input
+                            type="text"
+                            id="feedTitle"
+                            name="feedTitle"
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label htmlFor="feedTitle">Título do feed:</label>
+                    <div>
+                        <label>Conteúdo do feed</label>
+                        <textarea
+                            id="feedContent"
+                            name="feedContent"
+                            rows="6"
+                        />
+                    </div>
 
-                    <input
-                        type="text"
-                        id="feedTitle"
-                        name="feedTitle"
-                        required
-                    />
-                </div>
+                    <div>
+                        <h3>Categorias</h3>
 
-                <br />
+                        <div className="create-post-categories">
+                            {userHobbies.map((hobby) => (
+                                <label key={hobby}>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedCategories.includes(
+                                            hobby,
+                                        )}
+                                        onChange={() =>
+                                            handleCategoryChange(hobby)
+                                        }
+                                    />
+                                    {hobby}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
 
-                <div>
-                    <label htmlFor="feedContent">Conteúdo do feed:</label>
+                    <div className="create-post-file">
+                        <label>Adicionar imagens</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={(e) =>
+                                setImages(Array.from(e.target.files || []))
+                            }
+                        />
+                    </div>
 
-                    <textarea
-                        id="feedContent"
-                        name="feedContent"
-                        rows="6"
-                        required
-                    />
-                </div>
-
-                <br />
-
-                <div>
-                    <h3>Categorias</h3>
-
-                    {hobbiesList.map((hobby) => (
-                        <label
-                            key={hobby}
-                            style={{
-                                display: "block",
-                                marginBottom: "5px",
-                            }}
-                        >
-                            <input
-                                type="checkbox"
-                                checked={selectedCategories.includes(hobby)}
-                                onChange={() => handleCategoryChange(hobby)}
-                            />{" "}
-                            {hobby}
-                        </label>
-                    ))}
-                </div>
-
-                <br />
-
-                <div>
-                    <label htmlFor="images">Adicionar imagens</label>
-
-                    <input
-                        id="images"
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={(e) =>
-                            setImages(Array.from(e.target.files || []))
-                        }
-                    />
-                </div>
-
-                {images.length > 0 && (
-                    <>
-                        <br />
-                        <p>{images.length} imagem(ns) selecionada(s)</p>
-                    </>
-                )}
-
-                <br />
-
-                <button type="submit">Publicar</button>
-            </form>
+                    <button className="create-post-btn" type="submit">
+                        Publicar
+                    </button>
+                </form>
+            </div>
         </>
     );
 }
