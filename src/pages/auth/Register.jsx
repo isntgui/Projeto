@@ -33,7 +33,7 @@ export default function Register() {
                 email,
                 password,
                 options: {
-                    emailRedirectTo: `${import.meta.env.VITE_SITE_URL}/complete-profile`,
+                    emailRedirectTo: `${window.location.origin}/complete-profile`,
                 },
             });
 
