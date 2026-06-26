@@ -1,11 +1,9 @@
-/* RESET BÁSICO */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* NAVBAR */
 .navbar {
     width: 100%;
     padding: 12px 32px;
@@ -19,7 +17,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* SEÇÕES */
 .nav-left,
 .nav-center,
 .nav-right {
@@ -41,7 +38,6 @@
     justify-content: flex-end;
 }
 
-/* NOME DO APP */
 .app-name {
     font-size: 20px;
     font-weight: 700;
@@ -52,11 +48,6 @@
     transition: 0.2s;
 }
 
-.app-name:hover {
-    color: #4dabf7;
-}
-
-/* BOTÕES */
 .nav-btn {
     background: transparent;
     border: none;
@@ -77,7 +68,6 @@
     color: #fff;
 }
 
-/* BOTÃO LOGOUT */
 .logout-btn {
     display: flex;
     align-items: center;
@@ -94,7 +84,6 @@
     transform: scale(1.1);
 }
 
-/* MODAL OVERLAY */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -111,7 +100,6 @@
     animation: fadeIn 0.25s ease;
 }
 
-/* MODAL */
 .modal-box {
     background: #ffffff;
 
@@ -134,7 +122,6 @@
     margin-bottom: 24px;
 }
 
-/* BOTÕES MODAL */
 .modal-actions {
     display: flex;
     gap: 12px;
@@ -153,7 +140,6 @@
     transition: all 0.2s ease;
 }
 
-/* CONFIRMAR */
 .modal-actions button:first-child {
     background: #e53935;
     color: white;
@@ -164,7 +150,6 @@
     transform: translateY(-2px);
 }
 
-/* CANCELAR */
 .modal-actions button:last-child {
     background: #f1f1f1;
     color: #333;
@@ -175,7 +160,95 @@
     transform: translateY(-2px);
 }
 
-/* ANIMAÇÕES */
+.menu-btn {
+    display: none;
+
+    background: none;
+    border: none;
+
+    color: white;
+    font-size: 28px;
+
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 998;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    background: #1f1f1f;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px 18px;
+    gap: 12px;
+
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+
+    z-index: 999;
+
+    animation: slideDrawer 0.25s ease;
+}
+
+.drawer-btn {
+    background: transparent;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    text-align: left;
+    font-size: 16px;
+
+    padding: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.drawer-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.close-btn {
+    align-self: flex-end;
+
+    background: none;
+    border: none;
+
+    color: white;
+    font-size: 24px;
+
+    cursor: pointer;
+
+    margin-bottom: 15px;
+}
+
+@keyframes slideDrawer {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -198,11 +271,13 @@
     }
 }
 
-/* RESPONSIVO */
 @media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+    }
+
     .nav-center {
         display: none;
-        /* simplifica no mobile */
     }
 
     .navbar {
