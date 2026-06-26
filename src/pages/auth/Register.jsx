@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
-import '../../css/global.css';
-import EyeIcon from '../../assets/eye.svg';
-import EyeOffIcon from '../../assets/eyeoff.svg';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
+import "../../css/global.css";
+import EyeIcon from "../../assets/eye.svg";
+import EyeOffIcon from "../../assets/eyeoff.svg";
 
 export default function Register() {
     const navigate = useNavigate();
-    
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -33,8 +33,8 @@ export default function Register() {
                 email,
                 password,
                 options: {
-                    emailRedirectTo: 'http://localhost:5173/complete-profile'
-                }
+                    emailRedirectTo: `${import.meta.env.VITE_SITE_URL}/complete-profile`,
+                },
             });
 
             if (error) {
@@ -42,8 +42,7 @@ export default function Register() {
                 return;
             }
 
-            alert('Email enviado! Confirme seu email antes de continuar.');
-
+            alert("Email enviado! Confirme seu email antes de continuar.");
         } catch (err) {
             console.error(err);
             alert("Erro inesperado");
@@ -57,51 +56,53 @@ export default function Register() {
     }
 
     return (
-        <form className="form" onSubmit={(e) => { e.preventDefault(); handleCadasterUser(); }}>
+        <form
+            className="form"
+            onSubmit={(e) => {
+                e.preventDefault();
+                handleCadasterUser();
+            }}
+        >
             <h1>Cadastrar</h1>
 
             <label>Email</label>
             <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            className="input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className="input"
             />
 
             <label>Senha</label>
             <div className="input-group">
-            <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Senha"
-                className="input"
-            />
-
-            <button
-                type="button"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="toggle-password"
-            >
-                <img
-                src={showPassword ? EyeOffIcon : EyeIcon}
-                alt="Mostrar/Esconder senha"
+                <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Senha"
+                    className="input"
                 />
-            </button>
+
+                <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="toggle-password"
+                >
+                    <img
+                        src={showPassword ? EyeOffIcon : EyeIcon}
+                        alt="Mostrar/Esconder senha"
+                    />
+                </button>
             </div>
 
             <button type="submit" className="btn" disabled={loading}>
-            {loading ? "Cadastrando..." : "Cadastrar usuário"}
+                {loading ? "Cadastrando..." : "Cadastrar usuário"}
             </button>
 
-            <button
-            type="button"
-            onClick={handleBackPage}
-            className="link"
-            >
-            Voltar
+            <button type="button" onClick={handleBackPage} className="link">
+                Voltar
             </button>
         </form>
     );
